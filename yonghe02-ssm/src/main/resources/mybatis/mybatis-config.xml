@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+    
+<!-- MyBatis的核心配置文件 -->
+<configuration >
+	<!-- 
+	1.配置数据源,即连接池(交给spring)
+	2.配置事务(交给spring)
+	3.配置映射文件
+ 	-->
+	
+	<!-- 配置映射文件
+	<mappers>
+		<mapper resource="mybatis/mapper/DoorMapper.xml"/>
+	</mappers>
+	 -->
+</configuration>

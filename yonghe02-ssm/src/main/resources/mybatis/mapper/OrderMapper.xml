@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 门店表的映射文件 namespace值为对应接口的全路径 -->
+<mapper namespace="com.tedu.dao.OrderMapper">
+<!-- 
+	resultMap是为了解决当数据表中的列名和pojo类中的属性名不一致的问题
+	resultMap中配置了数据表中的列和pojo类中的属性之间的对应关系(也就是映射)
+ -->
+
+<resultMap type="com.tedu.pojo.Order" id="orderRM">
+	<id column="id" property="id"/>
+	<result column="door_id" property="doorId"/>
+	<result column="order_no" property="orderNo"/>
+	<result column="order_type" property="orderType"/>
+	<result column="pnum" property="pnum"/>
+	<result column="cashier" property="cashier"/>
+	<result column="order_time" property="orderTime"/>
+	<result column="pay_time" property="payTime"/>
+	<result column="pay_type" property="payType"/>
+	<result column="price" property="price"/>
+
+</resultMap>
+	<!-- 1.查询所有门店信息，id值为对应接口中方法的名字 
+	resultType指定将查询的结果封装到哪个pojo对象中
+	如果查询的结果是单条记录,因此resultType的是Order类的全路径名
+	com.tedu.pojo.Order
+	如果查询的结果是多条记录,应该封装到一个List<Order>
+	此时resultType的值是集合中的泛型,也就是com.tedu.pojo.Order
+	 -->
+	 <!-- 1.查询所有订单
+	 	tb_order表中的列和Order类中的属性名不一致会导致数据封装失败
+	  --> 
+	<select id="findAll" resultMap="orderRM">
+		select * from tb_order
+	</select>
+	
+	<!-- 2.删除订单 -->
+	<delete id="deleteById">
+		delete from tb_order where id=#{id}
+	</delete>
+	<!-- 3.添加订单信息 -->
+	<insert id="addOrder">
+		insert into tb_order values(#{id},#{doorId},#{orderNo},
+		#{orderType},#{pnum},#{cashier},#{orderTime},#{payTime},
+		#{payType},#{price})
+	</insert>
+	<!-- 4.1.根据id查询 -->
+	<select id="findById" resultMap="orderRM">
+		select * from tb_order where id=#{id}
+	</select>
+	<!-- 4.2.根据id修改订单信息 -->
+	<update id="updateById">
+		update tb_order set door_id=#{doorId},order_no=#{orderNo},
+		order_type=#{orderType},pnum=#{pnum},cashier=#{cashier},order_time=#{orderTime},pay_time=#{payTime},
+		pay_type=#{payType},price=#{price} where id=#{id}
+	</update>
+</mapper>

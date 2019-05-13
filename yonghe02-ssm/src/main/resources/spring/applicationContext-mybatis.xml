@@ -1,0 +1,35 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+	<!-- 整合spring和mybatis框架	id值是固定值 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 1.指定mybatis核心配置文件的位置 -->
+		<property name="configLocation" 
+				value="classpath:mybatis/mybatis-config.xml"></property>
+				
+		<!-- 2.配置连接池(数据源) ref指向连接池bean对象的id值 -->
+		<property name="dataSource" ref="dataSource"></property>
+		
+		<!-- 3、扫描所有的 mapper.xml映射文件-->
+		<property name="mapperLocations" value="classpath:mybatis/mapper/*.xml"/>
+		
+		<!-- 4、配置pojo类路径的别名
+			为value值中的内容起一个别名, 别名即为当前类的名字
+			即 "com.tedu.pojo.Xxx" 可以简写为 "Xxx"
+		 -->
+		<property name="typeAliasesPackage" value="com.tedu.pojo"></property>
+	</bean>
+	
+	<!-- 4、定义mapper接口扫描器 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 扫描所有mapper接口 -->
+		<property name="basePackage" value="com.tedu.dao"/>
+	</bean>
+	
+</beans>
